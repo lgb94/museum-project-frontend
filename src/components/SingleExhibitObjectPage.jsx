@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getExhibitsObjectByExhibitObjectId } from "../utils/exhibit-object-requests/single-exhibit-object-by-exhibit-object-id";
 import { getExhibitsObjectsByExhibitId } from "../utils/exhibit-object-requests/exhibit-objects-by-exhibit-id";
+import ErrorPage from "./ErrorPage";
+import LoadingSpinner from "./LoadingSpinner";
 
 const SingleExhibitObject = () => {
   const param = useParams();
@@ -15,9 +17,11 @@ const SingleExhibitObject = () => {
   const [currentExhibit, setCurrentExhibit] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("")
 
   useEffect(() => {
     setIsError(false);
+    setErrorMessage("")
     setIsLoading(true);
     getExhibitsObjectByExhibitObjectId(exhibitObjectId)
       .then((response) => {
@@ -30,16 +34,17 @@ const SingleExhibitObject = () => {
         setIsLoading(false);
       })
       .catch((err) => {
+        setErrorMessage(err)
         setIsError(true);
       });
   }, [exhibitObjectId]);
 
   if (isLoading) {
-    return <p>object loading...</p>;
+    return <LoadingSpinner />;
   }
 
   if (isError) {
-    return <p>error loading object, please reload the page.</p>;
+    return <ErrorPage err={errorMessage} />;
   }
 
   const currentIndex = currentExhibit.findIndex(
