@@ -43,21 +43,21 @@ Allows you to search through the database of 2000+ sculptures from the Ancient W
 
 Allows you to view the most recently posted user created exhibits on the site - click an exhibit to go that exhibits page.
     
-    - From that exhibit page you can click an object and move through the exhibits objects in a virtual walkthrough of that users exhibit
+From that exhibit page you can click an object and move through the exhibits objects in a virtual walkthrough of that users exhibit
 
 ### My Exhibits 
 
 Takes you to your exhibits page, where you'll see all the exhibits you've created, as well as an option to create a new exhibit. If you have no exhibits, you'll be directed to create one so you can start collating objects.
     
-    - When you create an exhibit (providing a title (required) and a description (can be left blank)) you'll be directed back to the objects page where you can add an object to your exhibit by clicking on that objects page, then using the dropdown box that appears to add it to your exhibit.
+When you create an exhibit (providing a title (required) and a description (can be left blank)) you'll be directed back to the objects page where you can add an object to your exhibit by clicking on that objects page, then using the dropdown box that appears to add it to your exhibit.
     
-    - With an object added to you exhibit, heading back to your exhibits page will show that object in your exhibit (the first object added appears as the exhibits thumbnail picture)
-        
-        - Going to that exhibits page allows you to remove that object from the exhibit if you want to.
+With an object added to you exhibit, heading back to your exhibits page will show that object in your exhibit (the first object added appears as the exhibits thumbnail picture)
+       
+Going to that exhibits page allows you to remove that object from the exhibit if you want to.
             
-            - You can also edit that exhibits title and description from this page
+You can also edit that exhibits title and description from this page
     
-    - To delete an exhibit, you can do this from your exhibits page - just hover over the exhibit you want to delete and a prompt should appear for you to delete it - this action is irreversible.
+To delete an exhibit, you can do this from your exhibits page - just hover over the exhibit you want to delete and a prompt should appear for you to delete it - this action is irreversible.
 
 ## Have fun!
 
