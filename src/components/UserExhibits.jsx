@@ -3,7 +3,9 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { getUserByUserId } from "../utils/user-requests/get-user-by-user-id";
 import { getExhibitsByUserId } from "../utils/exhibit-requests/exhibit-by-user-id";
 import ExhibitThumbnailCard from "./ExhibitThumbnailCard";
+import ErrorPage from "./ErrorPage";
 import LoggedInContext from "../contexts/logged-in-user-context";
+import LoadingSpinner from "./LoadingSpinner";
 
 const UserExhibits = () => {
   const param = useParams();
@@ -15,13 +17,16 @@ const UserExhibits = () => {
   const [userIdExhibits, setUserIdExhibits] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [userIsCurator, setUserIsCurator] = useState(false);
   const [curatorExists, setCuratorExists] = useState(false);
   const [curatorHasNoExhibits, setCuratorHasNoExhibits] = useState(false);
 
   useEffect(() => {
+    setUserIsCurator(false);
     setPageUserId(param.user_id);
     setIsError(false);
+    setErrorMessage("");
     setIsLoading(true);
     getUserByUserId(param.user_id)
       .then((response) => {
@@ -41,39 +46,61 @@ const UserExhibits = () => {
               setIsLoading(false);
             })
             .catch((err) => {
+              setErrorMessage(err);
               setIsLoading(false);
               setIsError(true);
             });
         }, 1000);
       })
       .catch((err) => {
+        setErrorMessage(err);
         setIsLoading(false);
         setIsError(true);
       });
   }, [pageUserId, loggedInUser, param.user_id]);
 
   if (isLoading) {
-    return <p>page loading...</p>;
-  }
-
-  if (isError && curatorExists) {
     return (
       <>
-        <p>Curator has no exhibits!</p>
-        <button onClick={() => navigate(-1)}>Back to previous page</button>
-        <button onClick={() => navigate("/exhibits")}>Exhibits page</button>
+        <LoadingSpinner />
       </>
     );
   }
 
-  if (isError && !curatorExists) {
-    return (
+  if (isError) {
+    if (
+      errorMessage.response.data.msg === "bad request - user_id not recognised"
+    ) {
+      if (loggedInUser.user_id === 0) {
+        return (
+          <div className="error-page-wrapper">
+            <div className="error-page-box">
+              <p>You need to be logged in to see your exhibits!</p>
+              <Link to={`/`}>
+                <button>login</button>
+              </Link>
+            </div>
+          </div>
+        );
+      }
+      return (
+        <>
+          <ErrorPage err={errorMessage} />
+        </>
+      );
+    } else if (curatorExists) {
+      return (
+        <>
+          <p>Curator has no exhibits!</p>
+          <button onClick={() => navigate(-1)}>Back to previous page</button>
+          <button onClick={() => navigate("/exhibits")}>Exhibits page</button>
+        </>
+      );
+    } else {
       <>
-        <p>Curator doesnt exist!</p>
-        <button onClick={() => navigate(-1)}>Back to previous page</button>
-        <button onClick={() => navigate("/exhibits")}>Exhibits page</button>
-      </>
-    );
+        <ErrorPage err={errorMessage} />
+      </>;
+    }
   }
 
   if (curatorHasNoExhibits && !userIsCurator) {

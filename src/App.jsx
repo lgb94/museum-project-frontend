@@ -8,10 +8,11 @@ import ExhibitsPage from "./components/ExhibitsPage";
 import ExhibitViewer from "./components/ExhibitViewer";
 import SingleExhibitObject from "./components/SingleExhibitObjectPage";
 import UserExhibits from "./components/UserExhibits";
-import ExhibitCreate from "./components/ExhibitCreate"
+import ExhibitCreate from "./components/ExhibitCreate";
 import "./App.css";
 import LoggedInContext from "./contexts/logged-in-user-context";
 import NavBar from "./components/NavBar";
+import ErrorPage from "./components/ErrorPage";
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState({
@@ -42,14 +43,29 @@ function App() {
       >
         <NavBar />
         <Routes>
-          <Route path="/" element={isLoggedIn ? <HomeNavWindow /> : <LoginPage />} />
+          <Route path="*" element={<ErrorPage />} />
+          <Route
+            path="/"
+            element={isLoggedIn ? <HomeNavWindow /> : <LoginPage />}
+          />
           <Route path="/objects" element={<ObjectsPage />} />
           <Route path="/objects/:object_id" element={<SingleObjectPage />} />
           <Route path="/exhibits" element={<ExhibitsPage />} />
           <Route path="/exhibits/create" element={<ExhibitCreate />} />
           <Route path="/exhibits/:exhibit_id" element={<ExhibitViewer />} />
-          <Route path="/exhibits/:exhibit_id/:exhibit_object_id" element={<SingleExhibitObject />} />
-          <Route path="/user/:user_id" element={<UserExhibits loggedInUser={loggedInUser} isLoggedIn={isLoggedIn} />} />  
+          <Route
+            path="/exhibits/:exhibit_id/:exhibit_object_id"
+            element={<SingleExhibitObject />}
+          />
+          <Route
+            path="/user/:user_id"
+            element={
+              <UserExhibits
+                loggedInUser={loggedInUser}
+                isLoggedIn={isLoggedIn}
+              />
+            }
+          />
         </Routes>
       </LoggedInContext.Provider>
     </div>

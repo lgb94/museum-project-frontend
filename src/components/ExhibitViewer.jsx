@@ -4,6 +4,8 @@ import { getSingleExhibitbyExhibitId } from "../utils/exhibit-requests/exhibit-b
 import { getExhibitsObjectsByExhibitId } from "../utils/exhibit-object-requests/exhibit-objects-by-exhibit-id";
 import { patchExhibitTitleAndDescription } from "../utils/exhibit-requests/patch-exhibit-information";
 import ExhibitObjectThumbnailCard from "./ExhibitObjectThumbnailCard";
+import ErrorPage from "./ErrorPage";
+import LoadingSpinner from "./LoadingSpinner";
 import LoggedInContext from "../contexts/logged-in-user-context";
 
 const ExhibitViewer = () => {
@@ -16,6 +18,7 @@ const ExhibitViewer = () => {
   const [exhibitObjects, setExhibitObjects] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [userIsCurator, setUserIsCurator] = useState(false);
   const [editingInformation, setEditingInformation] = useState(false);
   const [newTitleAttempt, setNewTitleAttempt] = useState("");
@@ -25,6 +28,7 @@ const ExhibitViewer = () => {
 
   useEffect(() => {
     setIsError(false);
+    setErrorMessage("");
     setIsLoading(true);
     setUserIsCurator(false);
     getSingleExhibitbyExhibitId(exhibitId)
@@ -48,6 +52,7 @@ const ExhibitViewer = () => {
       })
       .catch((err) => {
         setIsLoading(false);
+        setErrorMessage(err);
         setIsError(true);
       });
   }, [exhibitId, loggedInUser]);
@@ -82,36 +87,35 @@ const ExhibitViewer = () => {
 
   if (isLoading) {
     return (
-    <>
-    <p>exhibit loading...</p>
-    </>);
+      <>
+        <LoadingSpinner />
+      </>
+    );
   }
 
   if (isError) {
     return (
       <>
-      <Link to={`/exhibits`}><button>Back to exhibits</button></Link>
-      <div className="exhibit-list-header">
-        <p>This exhibit doesnt exist... Why are you here?</p>
-        </div>
+        <ErrorPage err={errorMessage} />
       </>
     );
   }
 
-
   if (isEmptyExhibit && !userIsCurator) {
     return (
       <>
-      <Link to={`/exhibits`}><button>Back to exhibits</button></Link>
-      <div className="exhibit-list-header">
-        <h1>This exhibit is closed - you shouldn't be here!</h1>
-        <h2>
-          You sneaky little devil how did you get here? There's nothing for you
-          here just yet now SCRAM!
-        </h2>
-        <button onClick={() => navigate("/exhibits")}>
-          Im sorry! (Escort me out)
-        </button>
+        <Link to={`/exhibits`}>
+          <button>Back to exhibits</button>
+        </Link>
+        <div className="exhibit-list-header">
+          <h1>This exhibit is closed - you shouldn't be here!</h1>
+          <h2>
+            You sneaky little devil how did you get here? There's nothing for
+            you here just yet now SCRAM!
+          </h2>
+          <button onClick={() => navigate("/exhibits")}>
+            Im sorry! (Escort me out)
+          </button>
         </div>
       </>
     );
@@ -120,184 +124,123 @@ const ExhibitViewer = () => {
   if (isEmptyExhibit && userIsCurator) {
     return (
       <>
-      <Link to={`/exhibits`}><button>Back to exhibits</button></Link>
-      <div className="exhibit-list-header">
-        {editingInformation ? (
-          <>
-            <h2>Exhibit title:</h2>
-            <input
-              type="text"
-              value={newTitleAttempt}
-              onChange={(event) => setNewTitleAttempt(event.target.value)}
-            />
-            <h2>Exhibit description</h2>
-            <input
-              type="text"
-              value={newDescriptionAttempt}
-              onChange={(event) => setNewDescriptionAttempt(event.target.value)}
-            />
-            <button onClick={handleExhibitInformationChange}>
-              Save all changes
-            </button>
-            <button onClick={() => setEditingInformation(false)}>
-              Cancel changes
-            </button>
-          </>
-        ) : (
-          <>
-            <h1>{exhibitInfo.title}</h1>
-            <h2>{exhibitInfo.description}</h2>
-            <h3>
-              An exhibit by:{" "}
-              <Link to={`/user/${exhibitInfo.curator_id}`}>
-                {exhibitInfo.curator_username}
-              </Link>
-            </h3>
-          </>
-        )}
-        <div>
-          {userIsCurator && editingInformation === false ? (
-            <button onClick={() => setEditingInformation(true)}>
-              Edit exhibit information
-            </button>
-          ) : null
-          }
-        </div>
-        <p>This exhibit is empty</p>
-        <p>Go to the objects page and add some objects to open this exhibit!</p>
-        <button onClick={() => navigate("/objects")}>Objects page</button>
+        <Link to={`/exhibits`}>
+          <button>Back to exhibits</button>
+        </Link>
+        <div className="exhibit-list-header">
+          {editingInformation ? (
+            <>
+              <h2>Exhibit title:</h2>
+              <input
+                type="text"
+                value={newTitleAttempt}
+                onChange={(event) => setNewTitleAttempt(event.target.value)}
+              />
+              <h2>Exhibit description</h2>
+              <input
+                type="text"
+                value={newDescriptionAttempt}
+                onChange={(event) =>
+                  setNewDescriptionAttempt(event.target.value)
+                }
+              />
+              <button onClick={handleExhibitInformationChange}>
+                Save all changes
+              </button>
+              <button onClick={() => setEditingInformation(false)}>
+                Cancel changes
+              </button>
+            </>
+          ) : (
+            <>
+              <h1>{exhibitInfo.title}</h1>
+              <h2>{exhibitInfo.description}</h2>
+              <h3>
+                An exhibit by:{" "}
+                <Link to={`/user/${exhibitInfo.curator_id}`}>
+                  {exhibitInfo.curator_username}
+                </Link>
+              </h3>
+            </>
+          )}
+          <div>
+            {userIsCurator && editingInformation === false ? (
+              <button onClick={() => setEditingInformation(true)}>
+                Edit exhibit information
+              </button>
+            ) : null}
+          </div>
+          <p>This exhibit is empty</p>
+          <p>
+            Go to the objects page and add some objects to open this exhibit!
+          </p>
+          <button onClick={() => navigate("/objects")}>Objects page</button>
         </div>
       </>
     );
   }
 
-  if(!isEmptyExhibit && userIsCurator){
-  return (
-    <>
-    <Link to={`/exhibits`}><button>Back to exhibits</button></Link>
-    <div className="exhibit-list-header">
-    
-      {editingInformation ? (
-        <>
-          <h2>Exhibit title:</h2>
-          <input
-            type="text"
-            value={newTitleAttempt}
-            onChange={(event) => setNewTitleAttempt(event.target.value)}
-          />
-          <h2>Exhibit description</h2>
-          <input
-            type="text"
-            value={newDescriptionAttempt}
-            onChange={(event) => setNewDescriptionAttempt(event.target.value)}
-          />
-          <button onClick={handleExhibitInformationChange}>
-            Save all changes
-          </button>
-          <button onClick={() => setEditingInformation(false)}>
-            Cancel changes
-          </button>
-          </>
-      ) : (
-        <>
-          <h1>{exhibitInfo.title}</h1>
-          <h2>{exhibitInfo.description}</h2>
-          <h3>
-            An exhibit by:{" "}
-            <Link to={`/user/${exhibitInfo.curator_id}`}>
-              {exhibitInfo.curator_username}
-            </Link>
-          </h3>
-        </>
-      )}
-      <div>
-        {userIsCurator && editingInformation === false ? (
-          <>
-          <button onClick={() => setEditingInformation(true)}>
-            Edit exhibit information
-          </button>
-          <p>*To remove an object from your exhibit, hover over it and click remove.*</p>
-          </>
-        ) : null
-        }
-      </div>
-      {infoUpdateError ? (
-        <>
-          <p>error updating information please try again</p>
-        </>
-      ) : null
-      }
-</div>
-      <ul className="object-thumbnail-list">
-        {exhibitObjects.map((exhibitObject) => (
-          <div key={exhibitObject.exhibit_object_id}>
-            <ExhibitObjectThumbnailCard
-              exhibitId={exhibitId}
-              exhibitObject={exhibitObject}
-              exhibitInfo={exhibitInfo}
-            />
-          </div>
-        ))}
-      </ul>
-    </>
-  );
-}
-
-  if(!isEmptyExhibit && !userIsCurator){
+  if (!isEmptyExhibit && userIsCurator) {
     return (
       <>
-      <Link to={`/exhibits`}><button>Back to exhibits</button></Link>
-      <Link to={`/user/${exhibitInfo.curator_id}`}><button>See more by this user</button></Link>
-      <div className="exhibit-list-header">
-        {editingInformation ? (
-          <>
-            <h2>Exhibit title:</h2>
-            <input
-              type="text"
-              value={newTitleAttempt}
-              onChange={(event) => setNewTitleAttempt(event.target.value)}
-            />
-            <h2>Exhibit description</h2>
-            <input
-              type="text"
-              value={newDescriptionAttempt}
-              onChange={(event) => setNewDescriptionAttempt(event.target.value)}
-            />
-            <button onClick={handleExhibitInformationChange}>
-              Save all changes
-            </button>
-            <button onClick={() => setEditingInformation(false)}>
-              Cancel changes
-            </button>
-          </>
-        ) : (
-          <>
-            <h1>{exhibitInfo.title}</h1>
-            <h2>{exhibitInfo.description}</h2>
-            <h3>
-              An exhibit by:{" "}
-              <Link to={`/user/${exhibitInfo.curator_id}`}>
-                {exhibitInfo.curator_username}
-              </Link>
-            </h3>
-          </>
-        )}
-        <div>
-          {userIsCurator && editingInformation === false ? (
-            <button onClick={() => setEditingInformation(true)}>
-              Edit exhibit information
-            </button>
-          ) : null
-          }
+        <Link to={`/exhibits`}>
+          <button>Back to exhibits</button>
+        </Link>
+        <div className="exhibit-list-header">
+          {editingInformation ? (
+            <>
+              <h2>Exhibit title:</h2>
+              <input
+                type="text"
+                value={newTitleAttempt}
+                onChange={(event) => setNewTitleAttempt(event.target.value)}
+              />
+              <h2>Exhibit description</h2>
+              <input
+                type="text"
+                value={newDescriptionAttempt}
+                onChange={(event) =>
+                  setNewDescriptionAttempt(event.target.value)
+                }
+              />
+              <button onClick={handleExhibitInformationChange}>
+                Save all changes
+              </button>
+              <button onClick={() => setEditingInformation(false)}>
+                Cancel changes
+              </button>
+            </>
+          ) : (
+            <>
+              <h1>{exhibitInfo.title}</h1>
+              <h2>{exhibitInfo.description}</h2>
+              <h3>
+                An exhibit by:{" "}
+                <Link to={`/user/${exhibitInfo.curator_id}`}>
+                  {exhibitInfo.curator_username}
+                </Link>
+              </h3>
+            </>
+          )}
+          <div>
+            {userIsCurator && editingInformation === false ? (
+              <>
+                <button onClick={() => setEditingInformation(true)}>
+                  Edit exhibit information
+                </button>
+                <p>
+                  *To remove an object from your exhibit, hover over it and
+                  click remove.*
+                </p>
+              </>
+            ) : null}
+          </div>
+          {infoUpdateError ? (
+            <>
+              <p>error updating information please try again</p>
+            </>
+          ) : null}
         </div>
-        </div>
-        {infoUpdateError ? (
-          <>
-            <p>error updating information please try again</p>
-          </>
-        ) : null
-        }
-  
         <ul className="object-thumbnail-list">
           {exhibitObjects.map((exhibitObject) => (
             <div key={exhibitObject.exhibit_object_id}>
@@ -311,9 +254,81 @@ const ExhibitViewer = () => {
         </ul>
       </>
     );
-  
   }
 
+  if (!isEmptyExhibit && !userIsCurator) {
+    return (
+      <>
+        <Link to={`/exhibits`}>
+          <button>Back to exhibits</button>
+        </Link>
+        <Link to={`/user/${exhibitInfo.curator_id}`}>
+          <button>See more by this user</button>
+        </Link>
+        <div className="exhibit-list-header">
+          {editingInformation ? (
+            <>
+              <h2>Exhibit title:</h2>
+              <input
+                type="text"
+                value={newTitleAttempt}
+                onChange={(event) => setNewTitleAttempt(event.target.value)}
+              />
+              <h2>Exhibit description</h2>
+              <input
+                type="text"
+                value={newDescriptionAttempt}
+                onChange={(event) =>
+                  setNewDescriptionAttempt(event.target.value)
+                }
+              />
+              <button onClick={handleExhibitInformationChange}>
+                Save all changes
+              </button>
+              <button onClick={() => setEditingInformation(false)}>
+                Cancel changes
+              </button>
+            </>
+          ) : (
+            <>
+              <h1>{exhibitInfo.title}</h1>
+              <h2>{exhibitInfo.description}</h2>
+              <h3>
+                An exhibit by:{" "}
+                <Link to={`/user/${exhibitInfo.curator_id}`}>
+                  {exhibitInfo.curator_username}
+                </Link>
+              </h3>
+            </>
+          )}
+          <div>
+            {userIsCurator && editingInformation === false ? (
+              <button onClick={() => setEditingInformation(true)}>
+                Edit exhibit information
+              </button>
+            ) : null}
+          </div>
+        </div>
+        {infoUpdateError ? (
+          <>
+            <p>error updating information please try again</p>
+          </>
+        ) : null}
+
+        <ul className="object-thumbnail-list">
+          {exhibitObjects.map((exhibitObject) => (
+            <div key={exhibitObject.exhibit_object_id}>
+              <ExhibitObjectThumbnailCard
+                exhibitId={exhibitId}
+                exhibitObject={exhibitObject}
+                exhibitInfo={exhibitInfo}
+              />
+            </div>
+          ))}
+        </ul>
+      </>
+    );
+  }
 };
 
 export default ExhibitViewer;

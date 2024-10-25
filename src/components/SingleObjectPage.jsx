@@ -3,7 +3,9 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { getObjectById } from "../utils/object-requests/single-object-request";
 import { getExhibitsByUserId } from "../utils/exhibit-requests/exhibit-by-user-id";
 import { addObjectToExhibit } from "../utils/exhibit-object-requests/add-object-to-exhibit";
+import ErrorPage from "./ErrorPage";
 import LoggedInContext from "../contexts/logged-in-user-context";
+import LoadingSpinner from "./LoadingSpinner";
 
 const SingleObjectPage = () => {
   const param = useParams();
@@ -13,13 +15,16 @@ const SingleObjectPage = () => {
   const { loggedInUser, isLoggedIn } = useContext(LoggedInContext);
   const [exhibits, setExhibits] = useState([]);
   const [selectedExhibit, setSelectedExhibit] = useState("");
-  const [addedTo, setAddedTo] = useState("")
+  const [addedTo, setAddedTo] = useState("");
   const [isLoading, setIsloading] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [addToExhibitSuccess, setAddToExhibitSuccess] = useState(false);
   const [addToExhibitError, setAddToExhibitError] = useState(false);
 
   useEffect(() => {
+    setIsError(false);
+    setErrorMessage("");
     setIsloading(true);
     getObjectById(currentObjectId)
       .then((response) => {
@@ -38,6 +43,7 @@ const SingleObjectPage = () => {
               ) {
                 setIsloading(false);
               } else {
+                setErrorMessage(err);
                 setIsError(true);
                 setIsloading(false);
               }
@@ -47,7 +53,8 @@ const SingleObjectPage = () => {
           setIsloading(false);
         }
       })
-      .catch(() => {
+      .catch((err) => {
+        setErrorMessage(err);
         setIsError(true);
         setIsloading(false);
       });
@@ -57,7 +64,7 @@ const SingleObjectPage = () => {
     event.preventDefault();
     setAddToExhibitError(false);
     setAddToExhibitSuccess(false);
-    setAddedTo("")
+    setAddedTo("");
     if (selectedExhibit) {
       const updateObject = {
         object_id: 1 * currentObjectId,
@@ -66,7 +73,7 @@ const SingleObjectPage = () => {
       addObjectToExhibit(updateObject)
         .then((response) => {
           setAddToExhibitSuccess(true);
-          setAddedTo(selectedExhibit)
+          setAddedTo(selectedExhibit);
           setSelectedExhibit("");
         })
         .catch((err) => {
@@ -80,7 +87,7 @@ const SingleObjectPage = () => {
   if (isLoading) {
     return (
       <>
-        <p>object loading...</p>
+        <LoadingSpinner />
       </>
     );
   }
@@ -88,9 +95,7 @@ const SingleObjectPage = () => {
   if (isError) {
     return (
       <>
-        <p>error loading object - try reloading or return to objects page</p>
-        <button onClick={() => navigate(-1)}>Back to my Search</button>
-        <button onClick={() => navigate("/objects")}>Objects Home</button>
+        <ErrorPage err={errorMessage} />
       </>
     );
   }
@@ -119,23 +124,32 @@ const SingleObjectPage = () => {
                 {currentObject.object_url}
               </a>
             </p>
-            <button className="single-object-back-to-search-button"onClick={() => navigate(-1)}>Back to my Search</button>
+            <button
+              className="single-object-back-to-search-button"
+              onClick={() => navigate(-1)}
+            >
+              Back to my Search
+            </button>
             <div className="single-object-add-to-exhibit-wrapper">
               {loggedInUser.user_id !== 0 && exhibits.length > 0 ? (
                 <>
                   <div>
-                    <label className="single-object-add-to-label">Add to exhibit: </label>
+                    <label className="single-object-add-to-label">
+                      Add to exhibit:{" "}
+                    </label>
                     <select
-                      className="single-object-add-to-select"                    
+                      className="single-object-add-to-select"
                       value={selectedExhibit}
                       onChange={(event) =>
                         setSelectedExhibit(event.target.value)
                       }
                     >
-                      <option className="single-object-add-to-option" value="">Select an Exhibit</option>
+                      <option className="single-object-add-to-option" value="">
+                        Select an Exhibit
+                      </option>
                       {exhibits.map((exhibit) => (
                         <option
-                        className="single-object-add-to-option"  
+                          className="single-object-add-to-option"
                           key={exhibit.exhibit_id}
                           value={exhibit.exhibit_id}
                         >
@@ -143,12 +157,19 @@ const SingleObjectPage = () => {
                         </option>
                       ))}
                     </select>
-                    <button  className="single-object-add-to-button" onClick={handleExhibitAddition}>Add</button>
+                    <button
+                      className="single-object-add-to-button"
+                      onClick={handleExhibitAddition}
+                    >
+                      Add
+                    </button>
                   </div>
                   {addToExhibitSuccess ? (
                     <>
                       <p>object added successfully!</p>
-                      <Link to={`/exhibits/${addedTo}`}><button>Take me to my exhibit!</button></Link>
+                      <Link to={`/exhibits/${addedTo}`}>
+                        <button>Take me to my exhibit!</button>
+                      </Link>
                     </>
                   ) : (
                     <>
@@ -163,9 +184,7 @@ const SingleObjectPage = () => {
                           </Link>
                         </>
                       ) : (
-                        <>
-                          
-                        </>
+                        <></>
                       )}
                     </>
                   )}
