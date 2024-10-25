@@ -131,6 +131,7 @@ option {
 }
 
 .filters-box {
+  background-color:#c3c3c3;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -139,7 +140,7 @@ option {
   width: 50vw;
   margin: 0 auto;
   padding: 20px;
-  border: 1px solid #ccc;
+  border: 1px solid #000000;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
@@ -197,6 +198,7 @@ option {
 }
 
 .sorting-options-wrapper {
+  background-color:hsla(185, 100%, 67%, 0.51);
   width: 100vw;
   display: flex;
   align-items: center;
@@ -216,6 +218,7 @@ option {
 }
 
 .pagination-wrapper {
+  background-color:hsla(185, 100%, 67%, 0.51);
   width: 100vw;
   display: flex;
   align-items: center;
@@ -243,10 +246,12 @@ option {
 }
 
 .single-object-title {
+  background-color:hsla(185, 100%, 67%, 0.51);
   text-align: center;
   align-self: center;
 }
 .single-object-image-and-info-wrapper {
+  background-color: #c3c3c3;
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
@@ -268,6 +273,7 @@ option {
 }
 
 .single-object-information {
+  background-color:hsla(185, 100%, 67%, 0.51);
   max-width: 50vw;
   max-height: 85vh;
   overflow-x: hidden;
@@ -307,6 +313,7 @@ option {
 }
 
 .exhibit-list-header {
+  background-color:hsla(185, 100%, 67%, 0.51);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -446,10 +453,12 @@ option {
 }
 
 .exhibit-object-title {
+  background-color:hsla(185, 100%, 67%, 0.51);
   text-align: center;
   align-self: center;
 }
 .exhibit-object-image-and-info-wrapper {
+  background-color:#c3c3c3;
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
@@ -493,6 +502,7 @@ option {
 }
 
 .user-exhibit-header-wrapper {
+  background-color:hsla(185, 100%, 67%, 0.51);
   display: flex;
   flex-direction: column;
   justify-content: center;

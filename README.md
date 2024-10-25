@@ -22,15 +22,12 @@ I also wrote a couple loose scripts to collect this data which might be of inter
 
 Enter an email, a username and a password - if the email/username is already in the system this will fail.
 
-    - Don't worry about info collection, this is really just for show (the email is not used for anything, nor is there any functionality to contact it, etc.)
+- Don't worry about info collection, this is really just for show (the email is not used for anything, nor is there any functionality to contact it, etc.)
 
-    - Alternatively use one of the accounts from the development data from the back-end to use an account thats already in the system - i haven't provided this dev data with the repo since it does contain actual records from the museum APIs*.
+- Alternatively use one of the accounts from the development data from the back-end to use an account thats already in the system - the file you'll want to look at for usernames is users.js.*
+- Use the accounts for bigjimmyburrito or sarahsaurus.rex for accounts with exhibits, any of the others should be 'fresh' accounts.
 
-**While this info is publicly available re-uploading this date seems... inappropriate? I don't know the legality of it but i'm not gonna risk anything so, es lo que es, c'est la vie, etc.*
-    
-> ## There is a .txt file within the back-end repo which should contain a list of username password combinations you could use to access the site.
->       use bigjimmyburrito, sarahsaurus.rex for accounts with exhibits, any of the others for 'fresh' accounts.
-     
+**You might notice there is no objects.js file within this development data - this is because the dev data that was used to seed my database for production was the object records that I had gathered from the museum APIs. While this info is publicly available re-uploading this date seems... inappropriate - I don't know the legality of it but i'm not gonna risk anything so, that is why the dev data for objects is missing. All of the tests should run using test data anyway, so unless you wanted to host a copy of my API from that repo, this shouldn't be an issue, but thought i should mention it here in case you're assessing this project*
 
 ## Use the Nav Bar to explore different areas of the site:
     

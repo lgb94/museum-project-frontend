@@ -64,6 +64,7 @@ const ExhibitCreate = () => {
   if (exhibitCreated) {
     return (
         <>
+        <Link to={`/user/${loggedInUser.user_id}`}><button>Back to my Exhibits</button></Link>
         <div className="exhibit-create-wrapper">
             <div className="exhibit-create-box">
                 <h1 className="exhibit-create-header">Exhibit Created!</h1>
@@ -79,6 +80,7 @@ const ExhibitCreate = () => {
 
   return isLoggedIn ? (
     <>
+    <Link to={`/user/${loggedInUser.user_id}`}><button>Back to my Exhibits</button></Link>
       <div className="exhibit-create-wrapper">
         <div className="exhibit-create-box">
           <h1 className="exhibit-create-header">Create an Exhibit!</h1>
