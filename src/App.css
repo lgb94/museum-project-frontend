@@ -4,7 +4,9 @@
 }
 
 html {
-  background-color: pink;
+  background-image: url(../assets/vaporwave-blur.jpg);
+  background-size: cover;
+  background-attachment: fixed;
   font-family: "windowsFont";
   font-size: 12pt;
   font-weight: 400;
@@ -47,8 +49,6 @@ option {
   font-family: "windowsFont";
   font-size: 12pt;
 }
-
-
 
 .navbar {
   display: flex;
@@ -182,12 +182,12 @@ option {
 
 .object-thumbnail {
   padding: 12px;
- margin: 5px;
+  margin: 5px;
   border-width: 4px;
-  border-color:  black;
+  border-color: black;
   border-style: groove;
   border-radius: 4px;
-  background-color:darkgoldenrod;
+  background-color: darkgoldenrod;
   transition: background-color 0.2s ease;
 }
 
@@ -290,7 +290,7 @@ option {
   flex-direction: column;
 }
 
-.single-object-add-to-label{
+.single-object-add-to-label {
   margin: 10px;
 }
 
@@ -306,7 +306,7 @@ option {
   margin: 10px;
 }
 
-.exhibit-list-header{
+.exhibit-list-header {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -398,8 +398,8 @@ option {
 .exhibit-create-description-input {
   margin: 10px;
   width: 100%;
-  max-width: 600px; 
-  height: 150px; 
+  max-width: 600px;
+  height: 150px;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -425,10 +425,10 @@ option {
   margin: 5px;
   border-width: 4px;
   align-content: center;
-  border-color:  black;
+  border-color: black;
   border-style: groove;
   border-radius: 4px;
-  background-color:darkgoldenrod;
+  background-color: darkgoldenrod;
   transition: background-color 0.2s ease;
 }
 
@@ -480,7 +480,7 @@ option {
   flex-direction: column;
 }
 
-.exhibit-object-exhibit-info-wrapper{
+.exhibit-object-exhibit-info-wrapper {
   margin: 10px;
 }
 
