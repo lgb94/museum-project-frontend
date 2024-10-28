@@ -71,14 +71,17 @@ const UserExhibits = () => {
     if (
       errorMessage.response.data.msg === "bad request - user_id not recognised"
     ) {
-      if (loggedInUser.user_id === 0) {
+      if ((loggedInUser.user_id === 0) && ( pageUserId === "0" )) {
         return (
-          <div className="error-page-wrapper">
-            <div className="error-page-box">
-              <p>You need to be logged in to see your exhibits!</p>
+          <div className="above-screen-wrapper">
+            <div className="standard-page-wrapper">
+              <h1 className="error-title">ERROR</h1>
+            <div className="standard-page-box">
+              <p>You need to be logged in to see your exhibits...</p>
               <Link to={`/`}>
                 <button>login</button>
               </Link>
+            </div>
             </div>
           </div>
         );
@@ -91,9 +94,20 @@ const UserExhibits = () => {
     } else if (curatorExists) {
       return (
         <>
-          <p>Curator has no exhibits!</p>
-          <button onClick={() => navigate(-1)}>Back to previous page</button>
-          <button onClick={() => navigate("/exhibits")}>Exhibits page</button>
+          <div className="above-screen-wrapper">
+            <div className="standard-page-wrapper">
+              <h1 className="error-title">ERROR</h1>
+            <div className="standard-page-box">
+              <p>This Curator has no exhibits, how sad... But then, why are you here?</p>
+              <button onClick={() => navigate(-1)}>
+                Back to previous page
+              </button>
+              <button onClick={() => navigate("/exhibits")}>
+                Exhibits page
+              </button>
+            </div>
+            </div>
+          </div>
         </>
       );
     } else {
@@ -109,11 +123,21 @@ const UserExhibits = () => {
     }
     return (
       <>
+      <div className="above-screen-wrapper">
+        <div className="standard-page-wrapper">
+          <h1 className="error-title">ERROR</h1>
+        <div className="standard-page-box">
         <p>
           This curator has no exhibits - call them and let them know how silly
           that is!
         </p>
+        <Link to={`/exhibits`}>
         <button>Exhibits page</button>
+        </Link>
+        </div>
+        </div>
+        
+        </div>
       </>
     );
   }
@@ -121,10 +145,20 @@ const UserExhibits = () => {
   if (curatorHasNoExhibits && userIsCurator) {
     return (
       <>
-        <p>You have no exhibits - make one!</p>
+      <div className="above-screen-wrapper">
+        <div className="standard-page-wrapper">
+          <h1 className="error-title">ERROR</h1>
+      <div className="standard-page-box">
+        <p>You haven't made any exhibits yet... You should make one!</p>
         <Link to={`/exhibits/create`}>
-          <button>create an exhibit</button>
+          <button>Create an exhibit!</button>
         </Link>
+        <Link to={`/exhibits`}>
+        <button>Exhibits page</button>
+        </Link>
+        </div>
+        </div>
+        </div>
       </>
     );
   }
@@ -135,25 +169,31 @@ const UserExhibits = () => {
 
   return (
     <>
-      <Link to={`/`}>
-        <button>Home</button>
-      </Link>
+    <div className="full-page-wrapper">
       {userIsCurator ? (
-        <div className="user-exhibit-header-wrapper">
-          <h1>Your Exhibits!</h1>
+        <div className="standard-page-header">
+          <h1 className="standard-title">Your Exhibits!</h1>
+          <p>This is the list of all your exhibits - if you wish to delete an exhibit, hover over it and click the delete exhibit button. THIS ACTION IS IRREVERSIBLE</p>
+          <p>To add objects to an exhibit, go to the object page, find an object and use the drop-down menu from that objects page.</p>
           <Link to={`/exhibits/create`}>
-            <button>CREATE A NEW EXHIBIT</button>
+            <button>Create an Exhibit!</button>
           </Link>
+            <Link to={`/exhibits`}><button>Back to All Exhibits</button></Link>
         </div>
       ) : (
-        <div className="user-exhibit-header-wrapper">
-          <h1>{pageCuratorUsername}'s Exhibits!</h1>
+        <div className="standard-page-header">
+          <h1 className="standard-title">{pageCuratorUsername}'s Exhibits!</h1>
+          <p>You are now viewing all of {pageCuratorUsername}'s exhibits that are open to the public - click an exhibit to enter!
+            Once inside, click an object to start looking around!
+          </p>
+          <Link to={`/exhibits`}><button>Back to All Exhibits</button></Link>
         </div>
       )}
       {userIdExhibits.length === 0 ? (
         <></>
       ) : (
-        <div className="user-exhibit-thumbnail-wrapper">
+        
+        <div className="standard-page-wrapper">
           {loggedInUser.user_id === 1 * pageUserId ? (
             <div className="exhibit-thumbnail-list">
               {userIdExhibits.map((exhibit) => {
@@ -189,6 +229,7 @@ const UserExhibits = () => {
           )}
         </div>
       )}
+      </div>
     </>
   );
 };

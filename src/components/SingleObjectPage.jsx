@@ -102,8 +102,9 @@ const SingleObjectPage = () => {
 
   return (
     <>
+    <div className="above-screen-wrapper">
+      <div className="standard-page-wrapper">
       <h1 className="single-object-title">{currentObject.title}</h1>
-      <div className="single-object-page-wrapper">
         <div className="single-object-image-and-info-wrapper">
           <img
             className="single-object-image"
@@ -163,6 +164,7 @@ const SingleObjectPage = () => {
                     >
                       Add
                     </button>
+                    
                   </div>
                   {addToExhibitSuccess ? (
                     <>
@@ -182,6 +184,7 @@ const SingleObjectPage = () => {
                           <Link to={`/user/${loggedInUser.user_id}`}>
                             <button>my exhibits</button>
                           </Link>
+                          
                         </>
                       ) : (
                         <></>
@@ -214,6 +217,7 @@ const SingleObjectPage = () => {
             </div>
           </div>
         </div>
+      </div>
       </div>
     </>
   );

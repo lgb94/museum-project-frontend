@@ -17,21 +17,26 @@ const HomeNavWindow = () => {
   };
 
   return (
-    <div className="login-box-wrapper">
-    <div className="login-box">
-      <h2 className="login-header">{`Welcome back ${loggedInUser.username}!`}</h2>
-      <Link to="/objects">
-        <button className="login-button">Object Search!</button>
+    <div className="above-screen-wrapper">
+      <div className="standard-page-wrapper">
+      <h1 className="standard-title">{`W E L C O M E`}</h1>
+    <div className="standard-page-box">
+      <p>{`Good to see you again ${loggedInUser.username}!`}</p>
+      <p>What would you like to do today?</p>
+      <p>;)</p>
+      <Link className="home-page-button"to="/objects">
+        <button className="home-page-button">Object Search!</button>
       </Link>
-      <Link to="/exhibits">
-        <button className="login-button">View ALL Exhibits</button>
+      <Link className="home-page-button" to="/exhibits">
+        <button className="home-page-button">View ALL Exhibits</button>
       </Link>
-      <Link to={`/user/${loggedInUser.user_id}`}>
-        <button className="login-button">My Exhibits</button>
+      <Link className="home-page-button" to={`/user/${loggedInUser.user_id}`}>
+        <button className="home-page-button">My Exhibits</button>
       </Link>
-      <button className="login-button" onClick={handleLogout}>
+      <button onClick={handleLogout}>
         Logout
       </button>
+    </div>
     </div>
     </div>
   );

@@ -17,11 +17,11 @@ const SingleExhibitObject = () => {
   const [currentExhibit, setCurrentExhibit] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("")
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     setIsError(false);
-    setErrorMessage("")
+    setErrorMessage("");
     setIsLoading(true);
     getExhibitsObjectByExhibitObjectId(exhibitObjectId)
       .then((response) => {
@@ -34,7 +34,7 @@ const SingleExhibitObject = () => {
         setIsLoading(false);
       })
       .catch((err) => {
-        setErrorMessage(err)
+        setErrorMessage(err);
         setIsError(true);
       });
   }, [exhibitObjectId]);
@@ -59,19 +59,16 @@ const SingleExhibitObject = () => {
 
   return (
     <>
-    <Link to={`/exhibits/${exhibitId}`}><button>Back to exhibit</button></Link>
-      <h1 className="exhibit-object-title">{currentObject.title}</h1>
-      <div className="exhibit-object-page-wrapper">
-        <div className="exhibit-object-image-and-info-wrapper">
+      <div className="above-screen-wrapper">
+        <div className="standard-page-wrapper">
+        <h1 className="single-object-title">{currentObject.title}</h1>
+        <div className="single-object-image-and-info-wrapper">
           <img
-            className="exhibit-object-image"
+            className="single-object-image"
             src={`${currentObject.primary_image}`}
             alt={`Image of ${currentObject.title}`}
           />
-          <div className="exhibit-object-information">
-        <h2 className="exhibit-object-exhibit-title">
-          From the exhibit: <Link to={`/exhibits/${currentObject.exhibit_id}`}>{currentObject.exhibit_title}</Link>
-        </h2>
+          <div className="single-object-information">
             <p>Culture: {currentObject.culture}</p>
             <p>Period: {currentObject.period}</p>
             <p>Object begin date: {currentObject.object_begin_date}</p>
@@ -89,34 +86,42 @@ const SingleExhibitObject = () => {
                 {currentObject.object_url}
               </a>
             </p>
+            <h2 className="exhibit-object-exhibit-title">
+              From the exhibit:{" "}
+              <Link to={`/exhibits/${currentObject.exhibit_id}`}>
+                {currentObject.exhibit_title}
+              </Link>
+            </h2>
+          <div className="exhibit-object-page-select">
+            {prevObject ? (
+              <button
+                onClick={() => {
+                  setObjectExhibitId(prevObject.exhibit_object_id);
+                }}
+              >
+                Previous Object
+              </button>
+            ) : (
+              <button disabled>Previous Object</button>
+            )}
+            <Link to={`/exhibits/${exhibitId}`}>
+              <button>Back to exhibit</button>
+            </Link>
+            {nextObject ? (
+              <button
+                onClick={() => {
+                  setObjectExhibitId(nextObject.exhibit_object_id);
+                }}
+              >
+                Next Object
+              </button>
+            ) : (
+              <button disabled>Next Object</button>
+            )}
           </div>
-          <div className="exhibit-object-exhibit-info-wrapper">
-      </div>
-        </div>
-        <div className="exhibit-object-page-select">
-          {prevObject ? (
-            <button
-              onClick={() => {
-                setObjectExhibitId(prevObject.exhibit_object_id);
-              }}
-            >
-              Previous Object
-            </button>
-          ) : (
-            <button disabled>Previous Object</button>
-          )}
-          {nextObject ? (
-            <button
-              onClick={() => {
-                setObjectExhibitId(nextObject.exhibit_object_id);
-              }}
-            >
-              Next Object
-            </button>
-          ) : (
-            <button disabled>Next Object</button>
-          )}
-        </div>
+          </div>
+            </div>
+            </div>
       </div>
     </>
   );

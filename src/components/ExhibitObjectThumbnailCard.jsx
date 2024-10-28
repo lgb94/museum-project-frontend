@@ -19,7 +19,7 @@ const ExhibitObjectThumbnailCard = (props) => {
   return (
     <>
       <div
-        className="exhibit-object-thumbnail"
+        className="object-thumbnail"
         key={exhibitObject.exhibit_object_id}
         onMouseEnter={(event) => {
           if (loggedInUser.user_id === exhibitInfo.curator_id) {
@@ -37,8 +37,8 @@ const ExhibitObjectThumbnailCard = (props) => {
         {objectRemoved ? (
           <>
             <li className="object-removed-thumbnail">
-              <p>Object removed</p>
-              <p>Refresh to remove this message</p>
+              <p>Object removed!</p>
+              <p>Refresh the page remove this box.</p>
             </li>
           </>
         ) : (

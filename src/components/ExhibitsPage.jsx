@@ -47,15 +47,18 @@ const ExhibitsPage = () => {
   }
 
   return (
-    <>
+    <div className="full-page-wrapper">
+      <div className="standard-page-header">
+        <h1 className="standard-title">Exhibits Home</h1>
+        <p>This is a list of all the exhibits available to view from Museum Project users. Exhibits will appear here when they contain at least one object.</p>
+        <p>Click the Exhibits Name to enter that Exhibit!</p>
+        <p>Clicking the name of a curator will take you to a list of all that curators exhibits!</p>
       <Link to={`/`}>
         <button>Home</button>
       </Link>
-      <div className="exhibit-list-header">
-        <h1>Exhibits Home</h1>
-        <h2>Check out all the most recent exhibits!</h2>
+      <Link to={`/user/${loggedInUser.user_id}`}><button>My Exhibits</button></Link>
       </div>
-      <div className="exhibit-list-wrapper">
+    <div className="standard-page-wrapper">
         <div className="exhibit-thumbnail-list">
           {exhibitsList.map((exhibit) => {
             if (exhibit.object_count > 0) {
@@ -69,7 +72,7 @@ const ExhibitsPage = () => {
           })}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

@@ -1,9 +1,11 @@
-import { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import LoggedInContext from "../contexts/logged-in-user-context";
 import { postNewExhibit } from "../utils/exhibit-requests/post-new-exhibit";
 
 const ExhibitCreate = () => {
+  const navigate = useNavigate()
+
   const { loggedInUser, isLoggedIn } = useContext(LoggedInContext);
 
   const [newTitleAttempt, setNewTitleAttempt] = useState("");
@@ -58,33 +60,52 @@ const ExhibitCreate = () => {
     }
   };
 
+  if (exhibitCreateError){
+    return (
+      <>
+      <div className="above-screen-wrapper">
+        <div className="standard-page-wrapper">
+        <h1 className="error-title">ERROR</h1>
+      <div className="standard-page-box">
+        <p>Something went wrong creating your exhibit.</p>
+        <p>Please try again</p>
+        <Link to={`/exhibit/create`}><button>Create Exhibit</button></Link>
+        <Link to={`/user/${loggedInUser.user_id}`}><button>Return to my Exhibits</button></Link>
+      </div>
+      </div>
+      </div>
+      </>
+    )
+  }
+
   if (exhibitCreated) {
     return (
       <>
-        <Link to={`/user/${loggedInUser.user_id}`}>
-          <button>Back to my Exhibits</button>
-        </Link>
-        <div className="exhibit-create-wrapper">
-          <div className="exhibit-create-box">
-            <h1 className="exhibit-create-header">Exhibit Created!</h1>
+        <div className="above-screen-wrapper">
+          <div className="standard-page-wrapper">
+            <h1 className="standard-title">
+              EXHIBIT CREATED
+            </h1>
+          <div className="standard-page-box">
+            <h2>Exhibit Title:</h2>
+            <h2>{newExhibit.title}</h2>
+            <h2>Exhibit description:</h2>
+            <h3>{newExhibit.description}</h3>
+            <p>
+              (If you want to change your exhibitions title or details, you can
+              do so from your exhibits page. You can also delete it there.)
+            </p>
             <p className="exhibit-create-text">
-              {" "}
-              Your exhibit was created successfully, now you'll want to search
-              for some objects to put into your exhibit. (your exhibit will not
-              be publicly available until you add at least one object)
+              Now you'll want to search for some objects to put into your
+              exhibit. (your exhibit will not be publicly available until you
+              add at least one object)
             </p>
             <Link to={`/objects`}>
               <button className="exhibit-create-button">
                 Take me to the object search!
               </button>
             </Link>
-            <p>
-              If you want to change your exhibitions title or details, you can
-              do so from your exhibits page. You can also delete it there.
-            </p>
-            <Link to={`/exhibits/${newExhibit.exhibit_id}`}>
-              <button className="exhibit-create-button">My exhibit page</button>
-            </Link>
+          </div>
           </div>
         </div>
       </>
@@ -93,12 +114,10 @@ const ExhibitCreate = () => {
 
   return isLoggedIn ? (
     <>
-      <Link to={`/user/${loggedInUser.user_id}`}>
-        <button>Back to my Exhibits</button>
-      </Link>
-      <div className="exhibit-create-wrapper">
-        <div className="exhibit-create-box">
-          <h1 className="exhibit-create-header">Create an Exhibit!</h1>
+      <div className="above-screen-wrapper">
+        <div className="standard-page-wrapper">
+          <h1 className="standard-title">Create an Exhibit!</h1>
+        <div className="standard-page-box">
           <h2 className="exhibit-create-subheader">
             First choose a title for your exhibit!{" "}
           </h2>
@@ -107,7 +126,7 @@ const ExhibitCreate = () => {
           </p>
 
           <input
-            className="exhibit-create-title-input"
+            className="title-input-field"
             placeholder="Enter a title..."
             type="text"
             value={newTitleAttempt}
@@ -128,7 +147,7 @@ const ExhibitCreate = () => {
             might take right now.)
           </p>
           <textarea
-            className="exhibit-create-description-input"
+            className="description-input-field"
             placeholder="Write a description..."
             type="text"
             value={newDescriptionAttempt}
@@ -155,17 +174,32 @@ const ExhibitCreate = () => {
               >
                 Create my Exhibit!
               </button>
+            
+              <button 
+                className="exhibit-create-button"
+                onClick={() => navigate(`/user/${loggedInUser.user_id}`)}
+                >
+                  Return to my Exhibits
+              </button>
             </>
           )}
+        </div>
         </div>
       </div>
     </>
   ) : (
     <>
+    <div className="above-screen-wrapper">
+      <div className="standard-page-wrapper">
+        <h1 className="error-title">ERROR</h1>
+      <div className="standard-page-box">
       <p>you must be logged in to use this feature!</p>
       <Link to={`/`}>
         <button>login</button>
       </Link>
+      </div>
+      </div>
+      </div>
     </>
   );
 };

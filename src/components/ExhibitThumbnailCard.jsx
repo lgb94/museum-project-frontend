@@ -72,10 +72,10 @@ const ExhibitThumbnailCard = (props) => {
             <>
               <div className="exhibit-thumbnail-information">
                 <Link to={`/exhibits/${exhibit.exhibit_id}`}>
-                  <h2>{exhibit.title}</h2>
+                  <h1 className="standard-title" >{exhibit.title}</h1>
                 </Link>
                 <Link to={`/user/${exhibit.curator_id}`}>
-                  <p>{exhibit.curator_username}</p>
+                  <p>by {exhibit.curator_username}</p>
                 </Link>
                 <p>"{exhibit.description}"</p>
                 <p>
@@ -149,10 +149,10 @@ const ExhibitThumbnailCard = (props) => {
           <div className="exhibit-thumbnail-information">
             
               <Link to={`/exhibits/${exhibit.exhibit_id}`}>
-                <h2>{exhibit.title}</h2>
+                <h1 className="standard-title">{exhibit.title}</h1>
               </Link>
               <Link to={`/user/${exhibit.curator_id}`}>
-                <p>{exhibit.curator_username}</p>
+                <p>by {exhibit.curator_username}</p>
               </Link>
               <p>"{exhibit.description}"</p>
               <p>object count: {exhibit.object_count}</p>
