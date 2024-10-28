@@ -109,37 +109,42 @@ const ExhibitViewer = () => {
         {editingInformation ? (
           <>
             <div className="above-screen-wrapper">
-              <div className="standard-page-box">
-                <h2>Exhibit title:</h2>
-                <input
-                  type="text"
-                  value={newTitleAttempt}
-                  onChange={(event) => setNewTitleAttempt(event.target.value)}
-                />
-                <h2>Exhibit description</h2>
-                <input
-                  type="text"
-                  value={newDescriptionAttempt}
-                  onChange={(event) =>
-                    setNewDescriptionAttempt(event.target.value)
-                  }
-                />
-                <p className="exhibit-create-text">
-                  This information will be displayed publicly on your exhibit
-                  page so please be considerate of others when entering these
-                  details
-                </p>
-                <p className="exhibit-create-text">
-                  This information will also be displayed alongside each object
-                  in your exhibit - make sure its relevant to what your
-                  displaying. (or dont!)
-                </p>
-                <button onClick={handleExhibitInformationChange}>
-                  Save all changes
-                </button>
-                <button onClick={() => setEditingInformation(false)}>
-                  Cancel changes
-                </button>
+              <div className="standard-page-wrapper">
+                <h1 className="standard-title">EDIT EXHIBIT</h1>
+                <div className="standard-page-box">
+                  <h2>Exhibit title:</h2>
+                  <input
+                  className="title-input-field"
+                    type="text"
+                    value={newTitleAttempt}
+                    onChange={(event) => setNewTitleAttempt(event.target.value)}
+                  />
+                  <h2>Exhibit description</h2>
+                  <textarea
+                    className="description-input-field"
+                    type="text"
+                    value={newDescriptionAttempt}
+                    onChange={(event) =>
+                      setNewDescriptionAttempt(event.target.value)
+                    }
+                  />
+                  <p className="exhibit-create-text">
+                    This information will be displayed publicly on your exhibit
+                    page so please be considerate of others when entering these
+                    details
+                  </p>
+                  <p className="exhibit-create-text">
+                    This information will also be displayed alongside each
+                    object in your exhibit - make sure its relevant to what your
+                    displaying. (or dont!)
+                  </p>
+                  <button onClick={handleExhibitInformationChange}>
+                    Save all changes
+                  </button>
+                  <button onClick={() => setEditingInformation(false)}>
+                    Cancel changes
+                  </button>
+                </div>
               </div>
             </div>
             <div className="standard-page-header">
@@ -151,11 +156,12 @@ const ExhibitViewer = () => {
                   {exhibitInfo.curator_username}
                 </Link>
               </h3>
-              {userIsCurator && editingInformation === false ? (
-                <button onClick={() => setEditingInformation(true)}>
-                  Edit exhibit information
-                </button>
-              ) : null}
+                  <button onClick={() => setEditingInformation(true)}>
+                    Edit exhibit information
+                  </button>
+                  <Link to={`/user/${exhibitInfo.curator_id}`}>
+                    <button>Back to my Exhibits</button>
+                  </Link>
             </div>
           </>
         ) : (
@@ -169,21 +175,25 @@ const ExhibitViewer = () => {
                   {exhibitInfo.curator_username}
                 </Link>
               </h3>
-              {userIsCurator && editingInformation === false ? (
-                <button onClick={() => setEditingInformation(true)}>
-                  Edit exhibit information
-                </button>
-              ) : null}
+                  <button onClick={() => setEditingInformation(true)}>
+                    Edit exhibit information
+                  </button>
+                  <Link to={`/user/${exhibitInfo.curator_id}`}>
+                    <button>Back to my Exhibits</button>
+                  </Link>
             </div>
           </>
         )}
         <div className="standard-page-wrapper">
+          <h1 className="error-title">ERROR</h1>
           <div className="standard-page-box">
-            <h1>This Exhibit is currently empty!</h1>
             <p>
-              Go to the objects page and add some objects to open this exhibit!
+              This exhibit is currently empty! Go to the objects page and add
+              some objects to open this exhibit!
             </p>
-            <button onClick={() => navigate("/objects")}>Objects page</button>
+            <button className="big-button" onClick={() => navigate("/objects")}>
+              Objects page
+            </button>
           </div>
         </div>
       </>
@@ -199,42 +209,42 @@ const ExhibitViewer = () => {
           <>
             <div className="above-screen-wrapper">
               <div className="standard-page-wrapper">
-              <h1 className="standard-title">EDIT INFORMATION</h1>
-              <div className="standard-page-box">
-                <h2>Exhibit title:</h2>
-                <input
-                  className="title-input-field"
-                  type="text"
-                  value={newTitleAttempt}
-                  onChange={(event) => setNewTitleAttempt(event.target.value)}
-                />
-                <h2>Exhibit description</h2>
-                <textarea
-                  className="description-input-field"
-                  type="text"
-                  value={newDescriptionAttempt}
-                  onChange={(event) =>
-                    setNewDescriptionAttempt(event.target.value)
-                  }
-                />
-                <p className="exhibit-create-text">
-                  This information will be displayed publicly on your exhibit
-                  page so please be considerate of others when entering these
-                  details
-                </p>
-                <p className="exhibit-create-text">
-                  This information will also be displayed alongside each object
-                  in your exhibit - make sure its relevant to what your
-                  displaying. (or dont!)
-                </p>
-                <button onClick={handleExhibitInformationChange}>
-                  Save all changes
-                </button>
-                <button onClick={() => setEditingInformation(false)}>
-                  Cancel changes
-                </button>
+                <h1 className="standard-title">EDIT INFORMATION</h1>
+                <div className="standard-page-box">
+                  <h2>Exhibit title:</h2>
+                  <input
+                    className="title-input-field"
+                    type="text"
+                    value={newTitleAttempt}
+                    onChange={(event) => setNewTitleAttempt(event.target.value)}
+                  />
+                  <h2>Exhibit description</h2>
+                  <textarea
+                    className="description-input-field"
+                    type="text"
+                    value={newDescriptionAttempt}
+                    onChange={(event) =>
+                      setNewDescriptionAttempt(event.target.value)
+                    }
+                  />
+                  <p className="exhibit-create-text">
+                    This information will be displayed publicly on your exhibit
+                    page so please be considerate of others when entering these
+                    details
+                  </p>
+                  <p className="exhibit-create-text">
+                    This information will also be displayed alongside each
+                    object in your exhibit - make sure its relevant to what your
+                    displaying. (or dont!)
+                  </p>
+                  <button onClick={handleExhibitInformationChange}>
+                    Save all changes
+                  </button>
+                  <button onClick={() => setEditingInformation(false)}>
+                    Cancel changes
+                  </button>
+                </div>
               </div>
-            </div>
             </div>
             <div className="standard-page-header">
               <h1 className="standard-title">{exhibitInfo.title}</h1>
@@ -245,6 +255,21 @@ const ExhibitViewer = () => {
                   {exhibitInfo.curator_username}
                 </Link>
               </h3>
+              {infoUpdateError ? (
+                <>
+                  <p className="login-error-text">error updating information please try again</p>
+                </>
+              ) : null}
+                  <p>
+                    *To remove an object from your exhibit, hover over it and
+                    click "Remove Object". THIS ACTION IS IRREVERSIBLE*
+                  </p>
+                  <button onClick={() => setEditingInformation(true)}>
+                    Edit exhibit information
+                  </button>
+                  <Link to={`/user/${exhibitInfo.curator_id}`}>
+                    <button>Back to my Exhibits</button>
+                  </Link>
             </div>
           </>
         ) : (
@@ -258,24 +283,21 @@ const ExhibitViewer = () => {
                   {exhibitInfo.curator_username}
                 </Link>
               </h3>
-        <div>
-          {infoUpdateError ? (
-            <>
-              <p>error updating information please try again</p>
-            </>
-          ) : null}
-          {userIsCurator && editingInformation === false ? (
-            <>
-              <button onClick={() => setEditingInformation(true)}>
-                Edit exhibit information
-              </button>
-              <p>
-                *To remove an object from your exhibit, hover over it and click
-                remove.*
-              </p>
-            </>
-          ) : null}
-        </div>
+              {infoUpdateError ? (
+                <>
+                  <p className="login-error-text">error updating information please try again</p>
+                </>
+              ) : null}
+                  <p>
+                    *To remove an object from your exhibit, hover over it and
+                    click "Remove Object". THIS ACTION IS IRREVERSIBLE*
+                  </p>
+                  <button onClick={() => setEditingInformation(true)}>
+                    Edit exhibit information
+                  </button>
+                  <Link to={`/user/${exhibitInfo.curator_id}`}>
+                    <button>Back to my Exhibits</button>
+                  </Link>
             </div>
           </>
         )}
@@ -314,18 +336,19 @@ const ExhibitViewer = () => {
           </Link>
         </div>
         <div className="above-screen-wrapper">
-        <div className="standard-page-wrapper">
+          <div className="standard-page-wrapper">
             <h1 className="error-tile">ERROR</h1>
-          <div className="standard-page-box">
-            <p>
-              YOU SHOULD NOT BE HERE MORTAL. There's nothing for
-              you here just yet - we won't question how you got here either but you MUST LEAVE.
-            </p>
-            <button onClick={() => navigate("/exhibits")}>
-              Im sorry! (Escort me out)
-            </button>
+            <div className="standard-page-box">
+              <p>
+                YOU SHOULD NOT BE HERE MORTAL. There's nothing for you here just
+                yet - we won't question how you got here either but you MUST
+                LEAVE.
+              </p>
+              <button onClick={() => navigate("/exhibits")}>
+                Im sorry! (Escort me out)
+              </button>
+            </div>
           </div>
-        </div>
         </div>
       </>
     );
@@ -353,17 +376,17 @@ const ExhibitViewer = () => {
           </Link>
         </div>
         <div>
-        <ul className="object-thumbnail-list">
-          {exhibitObjects.map((exhibitObject) => (
-            <div key={exhibitObject.exhibit_object_id}>
-              <ExhibitObjectThumbnailCard
-                exhibitId={exhibitId}
-                exhibitObject={exhibitObject}
-                exhibitInfo={exhibitInfo}
-              />
-            </div>
-          ))}
-        </ul>
+          <ul className="object-thumbnail-list">
+            {exhibitObjects.map((exhibitObject) => (
+              <div key={exhibitObject.exhibit_object_id}>
+                <ExhibitObjectThumbnailCard
+                  exhibitId={exhibitId}
+                  exhibitObject={exhibitObject}
+                  exhibitInfo={exhibitInfo}
+                />
+              </div>
+            ))}
+          </ul>
         </div>
       </>
     );

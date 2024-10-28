@@ -70,9 +70,14 @@ const ExhibitThumbnailCard = (props) => {
             </>
           ) : (
             <>
+            <img
+          className="exhibit-thumbnail-image"
+          src={'../../assets/de-milo.png'}
+          alt={`A placeholder image for an empty exhibit`}
+              />
               <div className="exhibit-thumbnail-information">
                 <Link to={`/exhibits/${exhibit.exhibit_id}`}>
-                  <h1 className="standard-title" >{exhibit.title}</h1>
+                  <h1 className="error-title" >{exhibit.title}</h1>
                 </Link>
                 <Link to={`/user/${exhibit.curator_id}`}>
                   <p>by {exhibit.curator_username}</p>

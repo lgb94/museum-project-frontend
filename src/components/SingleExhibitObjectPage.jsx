@@ -69,29 +69,6 @@ const SingleExhibitObject = () => {
             alt={`Image of ${currentObject.title}`}
           />
           <div className="single-object-information">
-            <p>Culture: {currentObject.culture}</p>
-            <p>Period: {currentObject.period}</p>
-            <p>Object begin date: {currentObject.object_begin_date}</p>
-            <p>Object end date: {currentObject.object_end_date}</p>
-            <p>Medium: {currentObject.medium}</p>
-            <p>Classification: {currentObject.classification}</p>
-            <p>Museum Dataset: {currentObject.museum_dataset}</p>
-            <p>
-              Object link:{" "}
-              <a
-                href={currentObject.object_url}
-                target="_blank"
-                rel="noreferrer"
-              >
-                {currentObject.object_url}
-              </a>
-            </p>
-            <h2 className="exhibit-object-exhibit-title">
-              From the exhibit:{" "}
-              <Link to={`/exhibits/${currentObject.exhibit_id}`}>
-                {currentObject.exhibit_title}
-              </Link>
-            </h2>
           <div className="exhibit-object-page-select">
             {prevObject ? (
               <button
@@ -119,6 +96,29 @@ const SingleExhibitObject = () => {
               <button disabled>Next Object</button>
             )}
           </div>
+            <h2 className="exhibit-object-exhibit-title">
+              From the exhibit:{" "}
+              <Link to={`/exhibits/${currentObject.exhibit_id}`}>
+                {currentObject.exhibit_title}
+              </Link>
+            </h2>
+            <p>Culture: {currentObject.culture}</p>
+            <p>Period: {currentObject.period}</p>
+            <p>Object begin date: {currentObject.object_begin_date}</p>
+            <p>Object end date: {currentObject.object_end_date}</p>
+            <p>Medium: {currentObject.medium}</p>
+            <p>Classification: {currentObject.classification}</p>
+            <p>Museum Dataset: {currentObject.museum_dataset}</p>
+            <p>
+              Object link:{" "}
+              <a
+                href={currentObject.object_url}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {currentObject.object_url}
+              </a>
+            </p>
           </div>
             </div>
             </div>

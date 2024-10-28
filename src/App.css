@@ -112,6 +112,11 @@ button:hover {
   margin-bottom: 0;
 }
 
+.standard-page-header button {
+  width: 200px;
+  align-self: center;
+}
+
 .standard-title {
   background: linear-gradient(to right, #010081, #008080);
   color: white;
@@ -660,9 +665,18 @@ button:hover {
 }
 
 .exhibit-object-exhibit-title {
+  text-align: center;
   margin: 10px;
 }
 
 .exhibit-object-page-select {
-  margin: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.exhibit-object-page-select button {
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 150px;
 }

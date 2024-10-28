@@ -13,6 +13,7 @@ import "./App.css";
 import LoggedInContext from "./contexts/logged-in-user-context";
 import NavBar from "./components/NavBar";
 import ErrorPage from "./components/ErrorPage";
+import PageTitle from "./components/PageTitle";
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState({
@@ -42,6 +43,7 @@ function App() {
         }}
       >
         <NavBar />
+          <PageTitle />
         <Routes>
           <Route path="*" element={<ErrorPage />} />
           <Route
