@@ -24,6 +24,12 @@ const ObjectSortAndLimits = (props) => {
             sortQuery = 'title_AZ';
         }
     }
+    if (sortByQuery === 'object_begin_date'){
+        sortQuery = 'EARLIEST' 
+    }
+    if (sortByQuery === 'object_end_date'){
+        sortQuery = 'LATEST'
+    }
 
     const [sortOption, setSortOption] = useState(sortQuery || 'default');
 
@@ -46,6 +52,14 @@ const ObjectSortAndLimits = (props) => {
             } else if (sortOption === 'title_ZA') {
                 newQueryObject.sortBy = "title";
                 newQueryObject.sortOrder = "desc";
+            }
+            else if (sortOption === 'EARLIEST'){
+                newQueryObject.sortBy = "object_begin_date"
+                newQueryObject.sortOrder = "asc"
+            }
+            else if (sortOption === 'LATEST'){
+                newQueryObject.sortBy = "object_end_date"
+                newQueryObject.sortOrder = "desc"
             }
         } else {
             delete newQueryObject.sortBy;
@@ -90,6 +104,8 @@ const ObjectSortAndLimits = (props) => {
                 <option value="default">default</option>
                 <option value="title_AZ">title a-z</option>
                 <option value="title_ZA">title z-a</option>
+                <option value="EARLIEST">Earliest-Latest</option>
+                <option value="LATEST">Latest-Earliest</option>
             </select>
             <button className="sorting-options-button" onClick={handleSortOptions}>Sort Results</button>
             </div>
