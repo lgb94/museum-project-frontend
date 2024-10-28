@@ -72,7 +72,7 @@ const ExhibitThumbnailCard = (props) => {
             <>
             <img
           className="exhibit-thumbnail-image"
-          src={'../../assets/de-milo.png'}
+          src={'./../../assets/de-milo.png'}
           alt={`A placeholder image for an empty exhibit`}
               />
               <div className="exhibit-thumbnail-information">
